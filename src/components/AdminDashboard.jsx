@@ -110,8 +110,10 @@ const AdminDashboard = () => {
    
     const url =
       recipientType === 'all'
-        ? `/api/v1/notifications/notify-all/` 
-        : `/api/v1/notifications/notify-by-phone-number/`;
+        ? `
+https://tyuiu-rag-bot-production.up.railway.app/api/v1/notifications/notify-all/` 
+        : `
+https://tyuiu-rag-bot-production.up.railway.app/api/v1/notifications/notify-by-phone-number/`;
   
     const params =
       recipientType === 'all'
