@@ -1,0 +1,27 @@
+/* src/App.css */
+.App {
+  display: flex;
+}
+
+.main-content {
+  display: flex;
+  margin-left: 80px; /* Отступ от боковой панели */
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.left-panel {
+  width: 300px; /* Размер панели сообщений */
+}
+
+.right-panel {
+  flex-grow: 1;
+}
+
+.graphs-container {
+  margin-top: 20px;
+}
+
+h3 {
+  color: #333;
+}
