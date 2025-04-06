@@ -1,13 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
-body {
-    font-family: 'Ubuntu', sans-serif;
-    background-color: #f5f7fa;
-    margin: 0;
-    padding: 0;
-}
-
-.events-container {
+.news-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -15,16 +8,17 @@ body {
     max-width: 1600px;
     margin-left: 110px;
     width: calc(100% - 140px);
+    font-family: 'Ubuntu', sans-serif;
 }
 
-h1 {
+.news-container h1 {
     font-size: 28px;
     margin-bottom: 25px;
     color: #2c3e50;
     font-weight: 700;
 }
 
-.add-event-button {
+.add-news-button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -39,18 +33,18 @@ h1 {
     margin-bottom: 20px;
 }
 
-.add-event-button:hover {
+.add-news-button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0, 123, 255, 0.3);
 }
 
-.add-event-button:active {
+.add-news-button:active {
     transform: translateY(0);
 }
 
-/* Сетка мероприятий 3x3 */
-.events-grid {
+/* News Grid */
+.news-grid {
     margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -58,7 +52,7 @@ h1 {
     width: 100%;
 }
 
-.event-card {
+.news-card {
     background: #ffffff;
     padding: 20px;
     border-radius: 12px;
@@ -83,23 +77,24 @@ h1 {
     }
 }
 
-.event-card:nth-child(1) { animation-delay: 0.1s; }
-.event-card:nth-child(2) { animation-delay: 0.2s; }
-.event-card:nth-child(3) { animation-delay: 0.3s; }
-.event-card:nth-child(4) { animation-delay: 0.4s; }
-.event-card:nth-child(5) { animation-delay: 0.5s; }
-.event-card:nth-child(6) { animation-delay: 0.6s; }
-.event-card:nth-child(7) { animation-delay: 0.7s; }
-.event-card:nth-child(8) { animation-delay: 0.8s; }
-.event-card:nth-child(9) { animation-delay: 0.9s; }
+.news-card:nth-child(1) { animation-delay: 0.1s; }
+.news-card:nth-child(2) { animation-delay: 0.2s; }
+.news-card:nth-child(3) { animation-delay: 0.3s; }
+.news-card:nth-child(4) { animation-delay: 0.4s; }
+.news-card:nth-child(5) { animation-delay: 0.5s; }
+.news-card:nth-child(6) { animation-delay: 0.6s; }
+.news-card:nth-child(7) { animation-delay: 0.7s; }
+.news-card:nth-child(8) { animation-delay: 0.8s; }
+.news-card:nth-child(9) { animation-delay: 0.9s; }
 
-.event-card:hover {
+.news-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
     border-color: #007bff;
 }
 
-.event-title {
+/* Content inside News Card */
+.news-title {
     font-size: 20px;
     font-weight: 700;
     color: #2c3e50;
@@ -109,7 +104,7 @@ h1 {
     border-bottom: 1px solid #eee;
 }
 
-.event-description {
+.news-body {
     color: #555;
     font-size: 15px;
     line-height: 1.5;
@@ -121,26 +116,26 @@ h1 {
     -webkit-box-orient: vertical;
 }
 
-.event-details {
+.news-details {
     margin-top: 15px;
     font-size: 14px;
 }
 
-.event-details p {
+.news-details p {
     margin: 8px 0;
     color: #555;
     display: flex;
     align-items: center;
 }
 
-.event-details p strong {
+.news-details p strong {
     color: #333;
     margin-right: 8px;
     min-width: 120px;
     display: inline-block;
 }
 
-.event-card button {
+.news-card button {
     margin-top: 15px;
     padding: 10px 15px;
     border: none;
@@ -152,7 +147,7 @@ h1 {
     align-self: flex-start;
 }
 
-/* Стили для пагинации */
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -214,7 +209,7 @@ h1 {
     color: white;
 }
 
-/* Модальное окно */
+/* Modal */
 .modal {
     position: fixed;
     top: 0;
@@ -314,240 +309,102 @@ h1 {
 .modal-body select:focus {
     border-color: #007bff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
-    outline: none;
-}
-
-.modal-body textarea {
-    resize: vertical;
-    min-height: 140px;
 }
 
 .modal-footer {
     display: flex;
     justify-content: flex-end;
-    gap: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .modal-footer button {
-    padding: 12px 24px;
+    padding: 10px 15px;
     border: none;
-    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: 600;
     transition: all 0.3s ease;
 }
 
-.modal-footer .cancel-button {
-    background-color: #f0f0f0;
-    color: #555;
-}
-
-.modal-footer .cancel-button:hover {
-    background-color: #e0e0e0;
-    color: #333;
-}
-
-.modal-footer .save-button {
-    background-color: #007bff;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-}
-
-.modal-footer .save-button:hover {
-    background-color: #0069d9;
+.modal-footer button:hover {
+    background-color: #0056b3;
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
 }
 
 .modal-footer button:active {
-    transform: scale(0.96);
+    transform: translateY(0);
 }
-
-.delete-button {
-    background-color: #dc3545;
-    color: white;
-    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
-}
-
-.delete-button:hover {
-    background-color: #c82333;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(220, 53, 69, 0.3);
-}
-
-.delete-button:active {
-    transform: scale(0.96);
-}
-
-
-.loader {
-    border: 6px solid #f3f3f3;
-    border-top: 6px solid #007bff;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.error-message {
-    background-color: #ffebee;
-    color: #d32f2f;
-    padding: 15px 20px;
-    border-radius: 8px;
-    margin: 20px 0;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.1);
-}
-
-.error-message button {
-    background-color: #d32f2f;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.error-message button:hover {
-    background-color: #b71c1c;
-}
-
-.no-events {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 50px 20px;
-    color: #777;
-    font-size: 18px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    margin-top: 20px;
-}
-.event-card {
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  min-height: 250px;
-  padding: 15px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: visible; /* Меняем на visible, чтобы внутренние блоки с overflow работали */
-}
-
-.event-description-container {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-  margin: 0;
-  padding: 0;
-}
-
-.event-description-container.expanded {
-  max-height: 200px; /* Можно регулировать по вкусу */
-  padding-top: 8px;
-  overflow-y: auto;
-  margin-top: 5px;
-}
-
-.event-description {
-  padding: 8px;
-  background-color: #f9f9f9;
-  border-radius: 4px;
-  border-left: 3px solid #0066cc;
-  white-space: pre-line;
-  word-break: break-word;
-  overflow-y: auto;
-}
-
-.description-toggle {
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 5px 10px;
-  margin-top: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  align-self: flex-start;
-  transition: background-color 0.3s;
-}
-
-.description-toggle:hover {
-  background-color: #e0e0e0;
-}
-
+.news-image img {
+    width: 100%;  /* Ширина изображения будет 100% от ширины карточки */
+    height: 200px;  /* Высота изображения фиксированная */
+    object-fit: cover;  /* Изображение заполняет контейнер без искажений */
+  }
+  .image-preview {
+    max-width: 100%;  /* Превью не будет превышать ширину контейнера */
+    max-height: 200px;  /* Ограничим высоту превью */
+    margin-top: 10px;   /* Отступ сверху */
+    border-radius: 8px; /* Скруглим углы превью */
+    overflow: hidden;   /* Обрежем лишнее изображение */
+  }
   
-
-/* Адаптивность */
-@media (max-width: 1200px) {
-    .events-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .events-container {
-        margin-left: 80px;
-        width: calc(100% - 110px);
-    }
-}
-
-@media (max-width: 768px) {
-    .events-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .events-container {
-        margin-left: 20px;
-        width: calc(100% - 40px);
-        padding: 20px 15px;
-    }
-    
-    .modal-content {
-        width: 90%;
-        padding: 20px;
-    }
-    
-    .modal-body input,
-    .modal-body textarea {
-        padding: 12px;
-    }
-    
-    .pagination button {
-        padding: 8px 12px;
-        min-width: 36px;
-        height: 36px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .events-container {
-        margin-left: 10px;
-        width: calc(100% - 20px);
-    }
-    
-    .add-event-button {
-        width: 100%;
-    }
-    
-    .modal-footer {
-        flex-direction: column;
-    }
-    
-    .modal-footer button {
-        width: 100%;
-    }
-}
+  .image-preview img {
+    width: 100%;        /* Изображение растягивается по ширине контейнера */
+    height: 100%;       /* Высота изображения будет автоматически адаптироваться */
+    object-fit: cover;  /* Изображение заполняет контейнер без искажения */
+  }
+  .news-card {
+    /* Остальные стили карточки */
+    height: auto; /* или фиксированная высота, если нужно */
+    min-height: 200px; /* минимальная высота карточки */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .news-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* скрываем содержимое, выходящее за границы */
+  }
+  
+  .news-body-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .news-body-container.expanded {
+    max-height: 500px; /* увеличили лимит */
+    overflow-y: auto;
+  }
+  
+  .news-body {
+    margin: 10px 0;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    white-space: pre-line;
+    word-break: break-word;
+    max-height: none;
+    overflow: visible;
+  }
+  
+  .show-body-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    font-size: 14px;
+    align-self: flex-start; /* выравниваем кнопку по левому краю */
+  }
+  
+  .show-body-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Остальные стили остаются без изменений */

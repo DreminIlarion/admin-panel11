@@ -4,64 +4,53 @@ import './AdminDashboard.css';
 
 Chart.register(...registerables);
 
-
+// Переменные из .env
 const BOT_API_URL = process.env.REACT_APP_BOT_API_URL;
+const NOTIFY_API_URL = process.env.REACT_APP_NOTIFY_API_URL;
 
 const AdminDashboard = () => {
-
   const [recipientType, setRecipientType] = useState('all');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [message, setMessage] = useState('');
-
 
   const [userCount, setUserCount] = useState(0);
   const [subscriberCount, setSubscriberCount] = useState(0);
   const [dailyUserGrowth, setDailyUserGrowth] = useState({ labels: [], counts: [] });
 
-  // Ссылка на график
   const chartRef = useRef(null);
-
 
   useEffect(() => {
     fetch(`${BOT_API_URL}/contacts/count/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setSubscriberCount(data.count || 0);
-      })
-      .catch((error) => console.error('Ошибка загрузки количества подписчиков: ', error));
+      .then(res => res.json())
+      .then(data => setSubscriberCount(data.count || 0))
+      .catch(err => console.error('Ошибка загрузки количества подписчиков:', err));
   }, []);
 
   useEffect(() => {
     fetch(`${BOT_API_URL}/users/count/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUserCount(data.count || 0);
-      })
-      .catch((error) => console.error('Ошибка загрузки количества пользователей: ', error));
+      .then(res => res.json())
+      .then(data => setUserCount(data.count || 0))
+      .catch(err => console.error('Ошибка загрузки количества пользователей:', err));
   }, []);
 
-  
   useEffect(() => {
     fetch(`${BOT_API_URL}/users/per-day-count/`)
-      .then((response) => response.json())
-      .then((data) => {
-        const growthData = data.distribution || [];
-        const labels = growthData.map((entry) => entry.date.split('T')[0]); // Форматируем даты
-        const counts = growthData.map((entry) => entry.count);
+      .then(res => res.json())
+      .then(data => {
+        const dist = data.distribution || [];
+        const labels = dist.map(entry => entry.date.split('T')[0]);
+        const counts = dist.map(entry => entry.count);
         setDailyUserGrowth({ labels, counts });
       })
-      .catch((error) => console.error('Ошибка загрузки статистики за день: ', error));
+      .catch(err => console.error('Ошибка загрузки статистики за день:', err));
   }, []);
-
 
   useEffect(() => {
     const ctx = document.getElementById('userGrowthChart').getContext('2d');
 
-
     if (chartRef.current) {
       chartRef.current.destroy();
     }
-
 
     chartRef.current = new Chart(ctx, {
       type: 'line',
@@ -82,48 +71,35 @@ const AdminDashboard = () => {
       },
       options: {
         scales: {
-          x: {
-            title: { display: true, text: 'Дата' },
-          },
+          x: { title: { display: true, text: 'Дата' } },
           y: {
             title: { display: true, text: 'Количество пользователей' },
             beginAtZero: true,
-            ticks: {
-              stepSize: 1,
-            },
+            ticks: { stepSize: 1 },
           },
         },
       },
     });
   }, [dailyUserGrowth]);
 
-
   const handleSendMessage = (e) => {
     e.preventDefault();
-  
- 
+
     if (!message || (recipientType === 'phone' && !phoneNumber)) {
       alert('Пожалуйста, заполните все обязательные поля.');
       return;
     }
-  
-   
+
     const url =
       recipientType === 'all'
-        ? `
-https://tyuiu-rag-bot-production.up.railway.app/api/v1/notifications/notify-all/` 
-        : `
-https://tyuiu-rag-bot-production.up.railway.app/api/v1/notifications/notify-by-phone-number/`;
-  
+        ? `${NOTIFY_API_URL}/api/v1/notifications/notify-all/`
+        : `${NOTIFY_API_URL}/api/v1/notifications/notify-by-phone-number/`;
+
     const params =
       recipientType === 'all'
-        ? { text: message } 
+        ? { text: message }
         : { text: message, phone_number: phoneNumber };
-  
-  
-    console.log("URL:", url);
-    console.log("Params:", params);
-  
+
     fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -135,31 +111,27 @@ https://tyuiu-rag-bot-production.up.railway.app/api/v1/notifications/notify-by-p
       })
       .then((data) => {
         alert('Сообщение успешно отправлено');
-        console.log("Ответ сервера:", data);
-        setMessage(''); 
-        setPhoneNumber(''); 
+        setMessage('');
+        setPhoneNumber('');
       })
       .catch((error) => {
         console.error('Ошибка отправки сообщения: ', error);
-        alert('Что-то пошло не так. Пожалуйста, попробуйте позже.');
+        alert('Что-то пошло не так. Попробуйте позже.');
       });
   };
-
 
   const subscriberPercentage = userCount > 0 ? (subscriberCount / userCount) * 100 : 0;
 
   return (
     <div className="dashboard-container">
-      {/* Левая панель: Статистика */}
+      {/* Левая панель */}
       <div className="left-panel">
         <h2>Статистика Telegram бота</h2>
 
-        {/* График роста пользователей */}
         <div className="chart-container">
           <canvas id="userGrowthChart"></canvas>
         </div>
 
-        {/* Карточки статистики */}
         <div className="statistics">
           <div className="stat-card">
             <h3>Количество пользователей:</h3>
@@ -171,7 +143,6 @@ https://tyuiu-rag-bot-production.up.railway.app/api/v1/notifications/notify-by-p
           </div>
         </div>
 
-        {/* Прогресс-бар */}
         <div className="progress-bar-container">
           <h3>Процент готовых получать уведомления:</h3>
           <div className="progress-bar">
@@ -184,7 +155,7 @@ https://tyuiu-rag-bot-production.up.railway.app/api/v1/notifications/notify-by-p
         </div>
       </div>
 
-      {/* Правая панель: Отправка сообщений */}
+      {/* Правая панель */}
       <div className="right-panel">
         <h2>Отправка сообщений</h2>
         <form onSubmit={handleSendMessage} className="message-form">
@@ -204,7 +175,7 @@ https://tyuiu-rag-bot-production.up.railway.app/api/v1/notifications/notify-by-p
               <input
                 type="text"
                 className="input-field"
-                placeholder="7 (XXX) XXX-XX-XX"
+                placeholder="7XXXXXXXXXX"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />

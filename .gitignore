@@ -24,3 +24,4 @@ yarn-error.log*
 
 # Игнорировать файл .env
 
+.qodo

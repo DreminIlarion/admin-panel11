@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaUsers, FaCalendarAlt } from 'react-icons/fa';
+import { FaHome, FaUsers, FaCalendarAlt, FaNewspaper } from 'react-icons/fa';
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
 
@@ -23,6 +23,12 @@ function Sidebar() {
           <Link to="/events" className="sidebar-link">
             <FaCalendarAlt className="icon"/>
             <span className="tooltip">Мероприятия</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/news" className="sidebar-link">
+            <FaNewspaper className="icon"/>
+            <span className="tooltip">Новости</span>
           </Link>
         </li>
       </ul>
